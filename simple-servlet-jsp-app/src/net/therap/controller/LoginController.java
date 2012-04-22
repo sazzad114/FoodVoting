@@ -30,16 +30,14 @@ public class LoginController extends HttpServlet {
 
         if(user == null){
 
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/user/login.jsp");
-            requestDispatcher.forward(request,response);
+            response.sendRedirect("/foodvoting/login");
 
         }
         else {
 
             HttpSession session = request.getSession();
             session.setAttribute("USER",user);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/welcome.jsp");
-            requestDispatcher.forward(request,response);
+            response.sendRedirect("/foodvoting/welcome");
         }
 
     }

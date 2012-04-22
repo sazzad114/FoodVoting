@@ -26,12 +26,12 @@
 
 <div style="width:180;background-color:white;float:left;margin:20px">
     <div style="width:auto;border-bottom:1px solid #87ceeb">
-         <a href="#" style="text-decoration:none">
+         <a href="/foodvoting/welcome" style="text-decoration:none">
              Home
          </a>
     </div>
     <div style="width:auto;border-bottom:1px solid #87ceeb">
-         <a href="#" style="text-decoration:none">
+         <a href="/foodvoting/foodlist" style="text-decoration:none">
              Food List
          </a>
     </div>
@@ -46,7 +46,7 @@
          </a>
     </div>
     <div style="width:auto;border-bottom:1px solid #87ceeb">
-         <a href="#" style="text-decoration:none">
+         <a href="/foodvoting/logout" style="text-decoration:none">
              Logout
          </a>
     </div>

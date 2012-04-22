@@ -1,8 +1,15 @@
 package net.therap.util;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * Created by IntelliJ IDEA.
@@ -12,95 +19,64 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class DatabaseTemplate {
-    private String databaseUrl;
-    private String databaseUserName;
-    private String databaseUserPassword;
-    private String databaseDriver;
+
+    private Connection connection;
 
 
 
-
-
-
-    public DatabaseTemplate(String databaseUrl, String databaseUserName,String databaseUserPassword,String databaseDriver) {
-        this.databaseUrl =databaseUrl;
-        this.databaseUserName = databaseUserName;
-        this.databaseUserPassword = databaseUserPassword;
-        this.databaseDriver = databaseDriver;
-
-    }
-
-      public void setDatabaseDriver(String databaseDriver) {
-        this.databaseDriver = databaseDriver;
-    }
-
-    void setDatabaseUrl(String databaseUrl) {
-        this.databaseUrl = databaseUrl;
-    }
-
-    void setDatabaseUserName(String databaseUserName) {
-        this.databaseUserName = databaseUserName;
-    }
-
-    void setDatabaseUserPassword(String databaseUserPassword) {
-        this.databaseUserPassword = databaseUserPassword;
-    }
-
-    Connection openConnection() {
-        Connection connection;
+    public void openConnection() {
+        Context initContext = null;
         try {
-            Class.forName(databaseDriver);
-        } catch (ClassNotFoundException e) {
+            initContext = new InitialContext();
+            Context envContext  = (Context)initContext.lookup("java:/comp/env");
+            DataSource ds = (DataSource)envContext.lookup("jdbc/myoracle");
+            connection = ds.getConnection();
+        } catch (NamingException e) {
+           throw new RuntimeException(e);
+        }
+        catch (SQLException e)
+        {
             throw new RuntimeException(e);
         }
-        try {
-            connection = DriverManager.getConnection(databaseUrl, databaseUserName, databaseUserPassword);
-        } catch (SQLException e) {
-
-            throw new RuntimeException(e);
-        }
-        return connection;
     }
-
-
 
 
     public void execute(String query) {
-        Connection conToUse = openConnection();
+        openConnection();
         Statement stmt = null;
         try {
-            stmt = conToUse.createStatement();
+            stmt = connection.createStatement();
             stmt.executeQuery(query);
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
 
             try {
                 stmt.close();
-            }
-            catch (NullPointerException e) {
-                closeConnection(conToUse);
+                closeConnection();
+            } catch (NullPointerException e) {
+                closeConnection();
                 throw new RuntimeException(e);
-            }catch (SQLException e) {
-                closeConnection(conToUse);
+            } catch (SQLException e) {
+                closeConnection();
                 throw new RuntimeException(e);
             }
-
-
         }
     }
 
     public <E> List<E> queryForObject(String query, RowObjectMapper<E> rowObjectMapper) {
-        Connection conToUse = openConnection();
+        openConnection();
         Statement stmt = null;
         ResultSet resultSet = null;
         List<E> listOfE = new ArrayList<E>();
         try {
-            stmt = conToUse.createStatement();
+            stmt = connection.createStatement();
             resultSet = stmt.executeQuery(query);
             while (resultSet.next()) {
                 listOfE.add(rowObjectMapper.mapRowToObject(resultSet));
             }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -108,15 +84,14 @@ public class DatabaseTemplate {
             try {
                 resultSet.close();
                 stmt.close();
-            }
-            catch (NullPointerException e) {
-                closeConnection(conToUse);
+                closeConnection();
+            } catch (NullPointerException e) {
+                closeConnection();
                 throw new RuntimeException(e);
-            }catch (SQLException e) {
-                closeConnection(conToUse);
+            } catch (SQLException e) {
+                closeConnection();
                 throw new RuntimeException(e);
             }
-
 
 
         }
@@ -124,10 +99,10 @@ public class DatabaseTemplate {
     }
 
     public void executeInsertQuery(String query, Object... parameters) {
-        Connection conToUse = openConnection();
+        openConnection();
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = conToUse.prepareStatement(query);
+            preparedStatement = connection.prepareStatement(query);
             int i = 1;
             for (Object parameter : parameters) {
                 if (parameter instanceof String) {
@@ -148,19 +123,20 @@ public class DatabaseTemplate {
             try {
 
                 preparedStatement.close();
+                closeConnection();
             } catch (NullPointerException e) {
-                closeConnection(conToUse);
+                closeConnection();
                 throw new RuntimeException(e);
             } catch (SQLException e) {
-                closeConnection(conToUse);
+                closeConnection();
                 throw new RuntimeException(e);
             }
         }
     }
 
-    public void closeConnection(Connection conToClose) {
+    public void closeConnection() {
         try {
-            conToClose.close();
+            connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

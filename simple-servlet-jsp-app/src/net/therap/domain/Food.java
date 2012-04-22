@@ -10,6 +10,19 @@ package net.therap.domain;
 public class Food {
 
     private int foodId;
+    private int foodTypeId;
+    private String foodName;
+    private String foodImageLink;
+
+    public int getFoodTypeId() {
+        return foodTypeId;
+    }
+
+    public void setFoodTypeId(int foodTypeId) {
+        this.foodTypeId = foodTypeId;
+    }
+
+
 
     public int getFoodId() {
         return foodId;
@@ -35,6 +48,4 @@ public class Food {
         this.foodImageLink = foodImageLink;
     }
 
-    private String foodName;
-    private String foodImageLink;
 }
