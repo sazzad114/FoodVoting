@@ -56,9 +56,6 @@
      <decorator:body/>
 </div>
 
-
-<decorator:body/>
-
 <%@ include file="footer.jsp" %>
 
 </body>
