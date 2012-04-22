@@ -9,13 +9,14 @@
 <html>
 <head><title>Simple jsp page</title></head>
 <body>
-<div>
+<div style="margin:100px;width:400px">
   <form action="/foodvoting/login" method="post">
    <fieldset>
     <legend>Log in:</legend>
-    Name: <input type="text" name="userName" size="30" /><br />
-    Password: <input type="password" name="password" size="30" /><br />
-    <input type="submit" value="login"/>
+    <br/>
+    Name:<br/><input type="text" name="userName" size="30" /><br /><br/>
+    Password:<br/> <input type="password" name="password" size="30" /><br /><br/>
+    <input type="submit" value="login"/><br/>
    </fieldset>
  </form>
 </div>
