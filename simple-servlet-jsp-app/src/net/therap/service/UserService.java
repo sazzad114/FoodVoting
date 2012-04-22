@@ -1,0 +1,12 @@
+package net.therap.service;
+
+import net.therap.domain.User;
+
+
+/**
+ * @author misbah
+ */
+public interface UserService {
+
+    User getUserByUserNameAndPassword(String userName, String password);
+}
