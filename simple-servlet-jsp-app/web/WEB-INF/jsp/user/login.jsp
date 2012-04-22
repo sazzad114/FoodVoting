@@ -9,6 +9,7 @@
 <html>
 <head><title>Simple jsp page</title></head>
 <body>
+
 <div style="margin:100px;width:400px">
   <form action="/foodvoting/login" method="post">
    <fieldset>

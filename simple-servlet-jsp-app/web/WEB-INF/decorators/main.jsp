@@ -23,6 +23,7 @@
 
 <body bgcolor="#F5FFFF">
 
+
 <div style="width:180;background-color:white;float:left;margin:20px">
     <div style="width:auto;border-bottom:1px solid #87ceeb">
          <a href="#" style="text-decoration:none">
@@ -55,6 +56,8 @@
      <decorator:body/>
 </div>
 
+
+<decorator:body/>
 
 <%@ include file="footer.jsp" %>
 
