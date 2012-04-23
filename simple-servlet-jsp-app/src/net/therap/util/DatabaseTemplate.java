@@ -1,12 +1,15 @@
 package net.therap.util;
 
+import net.therap.dao.VoteDaoImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -59,7 +62,7 @@ public class DatabaseTemplate {
             }
         }
     }
-
+     private static final Logger log = LoggerFactory.getLogger(DatabaseTemplate.class);
     public <E> List<E> queryForObject(RowObjectMapper<E> rowObjectMapper, String query, Object... parameters) {
 
         openConnection();
@@ -76,8 +79,11 @@ public class DatabaseTemplate {
                     preparedStatement.setInt(i, (Integer) parameter);
                 } else if (parameter instanceof Long) {
                     preparedStatement.setLong(i, (Long) parameter);
-                } else if (parameter instanceof Date)
-                    preparedStatement.setDate(i, new java.sql.Date(1000) );
+                } else if (parameter instanceof java.util.Date) {
+                    log.debug("inside template before");
+                    preparedStatement.setDate(i, new java.sql.Date(((java.util.Date)parameter).getTime()));
+                    log.debug("##teafter");
+                }
                 i++;
             }
 
