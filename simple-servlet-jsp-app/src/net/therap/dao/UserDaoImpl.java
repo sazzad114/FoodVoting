@@ -26,9 +26,23 @@ public class UserDaoImpl implements UserDao {
     }
     public User getUserByUserNamePassword(String userName , String password){
 
-        String query = "select * from ASH_SAZ_USER where USER_NAME = '"+userName.trim()+"'"+" AND USER_PSD = '"+password.trim()+"'";
+        String query = "select * from ASH_SAZ_USER where USER_NAME = ? AND USER_PSD = ?";
 
-        List<User> userList = dbTemplate.queryForObject(query,new RowUserMapperImpl());
+        List<User> userList = dbTemplate.queryForObject(new RowUserMapperImpl(),query,userName.trim(),password.trim());
+
+        if(userList.size() == 0){
+            return null;
+        }
+        else {
+            return userList.get(0);
+        }
+    }
+
+    public User getUserById(int userId) {
+
+        String query = "select * from ASH_SAZ_USER where USER_ID = ?";
+
+        List<User> userList = dbTemplate.queryForObject(new RowUserMapperImpl(),query,userId);
 
         if(userList.size() == 0){
             return null;

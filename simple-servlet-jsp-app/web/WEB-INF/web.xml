@@ -30,6 +30,14 @@
         <servlet-name>FoodListController</servlet-name>
         <servlet-class>net.therap.controller.FoodListController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>VoteController</servlet-name>
+        <servlet-class>net.therap.controller.VoteController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>VoteController</servlet-name>
+        <url-pattern>/vote</url-pattern>
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>FoodListController</servlet-name>
@@ -78,6 +86,10 @@
         <url-pattern>/foodlist</url-pattern>
     </filter-mapping>
 
+    <filter-mapping>
+        <filter-name>loginFilter</filter-name>
+        <url-pattern>/vote</url-pattern>
+    </filter-mapping>
 
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>

@@ -36,8 +36,8 @@
          </a>
     </div>
     <div style="width:auto;border-bottom:1px solid #87ceeb">
-         <a href="#" style="text-decoration:none">
-             My Account
+         <a href="/foodvoting/vote" style="text-decoration:none">
+             Vote
          </a>
     </div>
     <div style="width:auto;border-bottom:1px solid #87ceeb">

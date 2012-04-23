@@ -10,6 +10,10 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class FoodType {
+    List<Food> foodList;
+    Food votedFood;
+    private int foodTypeId;
+    private String foodTypeName;
 
     public int getFoodTypeId() {
         return foodTypeId;
@@ -27,8 +31,6 @@ public class FoodType {
         this.foodTypeName = foodTypeName;
     }
 
-    private int foodTypeId;
-    private String foodTypeName;
 
     public List<Food> getFoodList() {
         return foodList;
@@ -38,14 +40,14 @@ public class FoodType {
         this.foodList = foodList;
     }
 
-    public boolean isAlreadyVoted() {
-        return alreadyVoted;
+
+    public Food getVotedFood() {
+        return votedFood;
     }
 
-    public void setAlreadyVoted(boolean alreadyVoted) {
-        this.alreadyVoted = alreadyVoted;
+    public void setVotedFood(Food votedFood) {
+        this.votedFood = votedFood;
     }
 
-    List<Food> foodList;
-    boolean alreadyVoted;
+
 }
