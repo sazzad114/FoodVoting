@@ -29,7 +29,7 @@ public class FoodListController extends HttpServlet {
         FoodTypeService foodTypeService = new FoodTypeServiceImpl();
         List<FoodType> foodTypeList = foodTypeService.getFoodTypeList((User)request.getSession().getAttribute("USER"));
         request.setAttribute("FOODTYPELIST",foodTypeList);
-       RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/foodlist.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/foodlist.jsp");
         requestDispatcher.forward(request,response);
     }
 }

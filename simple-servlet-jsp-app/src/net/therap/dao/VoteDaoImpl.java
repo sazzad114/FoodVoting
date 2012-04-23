@@ -43,4 +43,11 @@ public class VoteDaoImpl implements VoteDao{
             return voteList.get(0);
         }
     }
+
+    public void saveVote(Vote vote, User user) {
+
+        String query = "INSERT INTO ASH_SAZ_USER_FOOD_VOTE VALUES(SEQ_ASH_SAZ_USER_FOOD_VOTE.nextval,?,?,?,?)";
+        dbTemplate.executeInsertQuery(query,new Date(),user.getId(),vote.getFood().getFoodId(),vote.getFood().getFoodTypeId());
+
+    }
 }

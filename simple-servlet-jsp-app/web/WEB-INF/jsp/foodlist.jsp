@@ -15,9 +15,7 @@
 
         <div>
             <li style="list-style-type:none">${foodType.foodTypeName}</li>
-            <c:if test="${foodType.votedFood ne null}">
-               <li style="list-style-type:none">${foodType.votedFood.foodName}</li>
-            </c:if>
+
             <br/>
 
             <div style="margin-left:50px">

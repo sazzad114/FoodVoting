@@ -49,5 +49,13 @@ public class FoodType {
         this.votedFood = votedFood;
     }
 
+    @Override
+        public boolean equals(Object foodType){
+           if(foodType instanceof FoodType){
+             return this.foodTypeName.equals(((FoodType)foodType).getFoodTypeName());
+           }
+           return false;
+        }
+
 
 }

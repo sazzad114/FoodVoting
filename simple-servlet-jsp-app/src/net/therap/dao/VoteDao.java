@@ -16,5 +16,6 @@ import java.util.Date;
 public interface VoteDao {
 
     Vote getVoteByUserFoodType(User user,int foodTypeId);
+    void saveVote(Vote vote,User user);
 
 }

@@ -47,5 +47,12 @@ public class Food {
     public void setFoodImageLink(String foodImageLink) {
         this.foodImageLink = foodImageLink;
     }
+    @Override
+    public boolean equals(Object food){
+       if(food instanceof Food){
+         return this.foodName.equals(((Food)food).getFoodName());
+       }
+       return false;
+    }
 
 }

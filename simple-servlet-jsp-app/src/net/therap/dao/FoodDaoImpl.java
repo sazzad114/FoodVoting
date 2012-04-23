@@ -17,7 +17,7 @@ import java.util.Properties;
  */
 public class FoodDaoImpl implements FoodDao{
 
-    DatabaseTemplate dbTemplate;
+   DatabaseTemplate dbTemplate;
    public FoodDaoImpl(){
         dbTemplate = new DatabaseTemplate();
     }

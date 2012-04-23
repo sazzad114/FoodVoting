@@ -126,6 +126,10 @@ public class DatabaseTemplate {
                     preparedStatement.setInt(i, (Integer) parameter);
                 } else if (parameter instanceof Long) {
                     preparedStatement.setLong(i, (Long) parameter);
+                }else if (parameter instanceof java.util.Date) {
+                    log.debug("inside template before");
+                    preparedStatement.setDate(i, new java.sql.Date(((java.util.Date)parameter).getTime()));
+                    log.debug("##teafter");
                 }
                 i++;
             }
