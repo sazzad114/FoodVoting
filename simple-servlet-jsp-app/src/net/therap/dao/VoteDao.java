@@ -1,10 +1,10 @@
 package net.therap.dao;
 
-import net.therap.domain.FoodType;
 import net.therap.domain.User;
 import net.therap.domain.Vote;
 
-import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -17,5 +17,6 @@ public interface VoteDao {
 
     Vote getVoteByUserFoodType(User user,int foodTypeId);
     void saveVote(Vote vote,User user);
+    Map<Integer,Integer> getFoodVoteCountMap();
 
 }

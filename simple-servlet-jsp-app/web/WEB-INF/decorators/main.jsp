@@ -41,7 +41,7 @@
          </a>
     </div>
     <div style="width:auto;border-bottom:1px solid #87ceeb">
-         <a href="#" style="text-decoration:none">
+         <a href="/foodvoting/viewvote" style="text-decoration:none">
              Admin
          </a>
     </div>

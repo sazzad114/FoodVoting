@@ -10,14 +10,14 @@
 <head><title>Simple jsp page</title></head>
 <body>
 
-<div style="margin:100px;width:400px">
+<div style="margin:100px;width:350px;">
   <form action="/foodvoting/login" method="post">
-   <fieldset>
+   <fieldset style="padding:20px">
     <legend>Log in:</legend>
     <br/>
     Name:<br/><input type="text" name="userName" size="30" /><br /><br/>
     Password:<br/> <input type="password" name="password" size="30" /><br /><br/>
-    <input type="submit" value="login"/><br/>
+    <input type="submit" value="login"/><br/></br>
    </fieldset>
  </form>
 </div>

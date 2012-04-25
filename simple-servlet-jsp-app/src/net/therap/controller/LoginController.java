@@ -1,7 +1,10 @@
 package net.therap.controller;
 
 
+import net.therap.domain.FoodType;
 import net.therap.domain.User;
+import net.therap.service.FoodTypeService;
+import net.therap.service.FoodTypeServiceImpl;
 import net.therap.service.UserServiceImpl;
 import org.apache.catalina.Session;
 import org.slf4j.Logger;
@@ -12,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 
 public class LoginController extends HttpServlet {
@@ -37,7 +41,11 @@ public class LoginController extends HttpServlet {
 
             HttpSession session = request.getSession();
             session.setAttribute("USER",user);
+            FoodTypeService foodTypeService = new FoodTypeServiceImpl();
+            List<FoodType> foodTypeList = foodTypeService.getFoodTypeList((User)request.getSession().getAttribute("USER"));
+            request.getSession().setAttribute("FOODTYPELIST", foodTypeList);
             response.sendRedirect("/foodvoting/welcome");
+
         }
 
     }

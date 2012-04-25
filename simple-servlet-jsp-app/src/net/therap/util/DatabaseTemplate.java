@@ -10,7 +10,9 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -112,6 +114,57 @@ public class DatabaseTemplate {
         }
         return listOfE;
     }
+
+    public <K,V> Map<K,V> queryForObjectMap(ResultSetMapMapper<K,V> resultSetMapMapper, String query, Object... parameters) {
+
+        openConnection();
+        Map<K,V> map = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            int i = 1;
+            for (Object parameter : parameters) {
+                if (parameter instanceof String) {
+                    preparedStatement.setString(i, (String) parameter);
+                } else if (parameter instanceof Integer) {
+                    preparedStatement.setInt(i, (Integer) parameter);
+                } else if (parameter instanceof Long) {
+                    preparedStatement.setLong(i, (Long) parameter);
+                } else if (parameter instanceof java.util.Date) {
+                    log.debug("inside template before");
+                    preparedStatement.setDate(i, new java.sql.Date(((java.util.Date)parameter).getTime()));
+                    log.debug("##teafter");
+                }
+                i++;
+            }
+
+            resultSet = preparedStatement.executeQuery();
+
+           map = resultSetMapMapper.getMapFromResultset(resultSet);
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+
+            try {
+                resultSet.close();
+                preparedStatement.close();
+                closeConnection();
+            } catch (NullPointerException e) {
+                closeConnection();
+                throw new RuntimeException(e);
+            } catch (SQLException e) {
+                closeConnection();
+                throw new RuntimeException(e);
+            }
+
+
+        }
+        return map;
+    }
+
 
     public void executeInsertQuery(String query, Object... parameters) {
         openConnection();

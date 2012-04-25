@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -49,5 +50,12 @@ public class VoteDaoImpl implements VoteDao{
         String query = "INSERT INTO ASH_SAZ_USER_FOOD_VOTE VALUES(SEQ_ASH_SAZ_USER_FOOD_VOTE.nextval,?,?,?,?)";
         dbTemplate.executeInsertQuery(query,new Date(),user.getId(),vote.getFood().getFoodId(),vote.getFood().getFoodTypeId());
 
+    }
+
+    public Map<Integer,Integer> getFoodVoteCountMap() {
+        Map<Integer, Integer> map;
+        String query = "SELECT FOOD_ID, COUNT(*) as VOTE_NUM FROM ASH_SAZ_USER_FOOD_VOTE GROUP BY FOOD_ID" ;
+        map = dbTemplate.queryForObjectMap(new ResultsetMapMapperImpl(),query);
+        return map;
     }
 }

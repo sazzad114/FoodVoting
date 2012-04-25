@@ -34,6 +34,16 @@
         <servlet-name>VoteController</servlet-name>
         <servlet-class>net.therap.controller.VoteController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminVoteViewController</servlet-name>
+        <servlet-class>net.therap.controller.AdminVoteViewController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AdminVoteViewController</servlet-name>
+        <url-pattern>/viewvote</url-pattern>
+    </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>VoteController</servlet-name>
         <url-pattern>/vote</url-pattern>

@@ -26,9 +26,11 @@ public class FoodListController extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        FoodTypeService foodTypeService = new FoodTypeServiceImpl();
-        List<FoodType> foodTypeList = foodTypeService.getFoodTypeList((User)request.getSession().getAttribute("USER"));
-        request.setAttribute("FOODTYPELIST",foodTypeList);
+        if(request.getSession().getAttribute("FOODTYPELIST") == null){
+          FoodTypeService foodTypeService = new FoodTypeServiceImpl();
+          List<FoodType> foodTypeList = foodTypeService.getFoodTypeList((User)request.getSession().getAttribute("USER"));
+          request.getSession().setAttribute("FOODTYPELIST", foodTypeList);
+        }
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/foodlist.jsp");
         requestDispatcher.forward(request,response);
     }
