@@ -68,24 +68,20 @@
     <hr class="noscreen"/>
 
     <div id="content-box">
-        <div id="content-box-in">
 
-            <a name="skip-menu"></a>
-            <!-- Content left -->
-            <div class="content-box-left">
+
+
                 <div class="content-box-left-in">
+                  <div style="padding:50px;line-height:200%;">
                     <decorator:body/>
+                   <div>
                 </div>
-            </div>
-            <!-- Content left end -->
+
 
             <hr class="noscreen"/>
 
-            <!-- Content right -->
-
-            <!-- Content right end -->
             <div class="cleaner">&nbsp;</div>
-        </div>
+
     </div>
 
     <hr class="noscreen"/>

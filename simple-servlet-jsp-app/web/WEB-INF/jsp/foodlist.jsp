@@ -14,19 +14,24 @@
     <c:forEach var="foodType" items="${FOODTYPELIST}">
 
         <div>
-            <li style="list-style-type:none">${foodType.foodTypeName}</li>
-
+            <li style="color:#6495ed; font-style:oblique;font-weight:bolder;font-size:15px">${foodType.foodTypeName}</li>
             <br/>
 
-            <div style="margin-left:50px">
-                <c:forEach var="food" items="${foodType.foodList}">
-                    <li>${food.foodName}</li>
-                    <br/>
-                </c:forEach>
+            <div style="padding:20px;border:1px solid #87ceeb">
+                <table style="font-size:15px;font-style:oblique;">
+                    <c:forEach var="food" items="${foodType.foodList}">
+                        <tr style="margin-bottom:10px">
+                            <td style="width:120px;"><img style="margin-bottom:10px"
+                                                          src="/foodvoting/img/${food.foodName}.jpeg"/></td>
+                            <td style="vertical-align:text-top; font-style:oblique;color:#4682b4;font-weight:bolder; width:120px;padding-left:50px">${food.foodName}</td>
+                        </tr>
+                    </c:forEach>
+                </table>
             </div>
         </div>
-    </c:forEach>
 
+        <br/>
+    </c:forEach>
 </div>
 </body>
 </html>

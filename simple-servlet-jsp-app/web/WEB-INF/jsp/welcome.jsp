@@ -35,6 +35,17 @@
            serves to nourish or build up the tissues or to supply body heat. The type of food you dream of or perhaps
            even eat will provide great insight into the type of emotional assistance required in waking life.
        </p>
+       <p>
+           Food is any substance consumed by living organisms,
+           including liquid drinks. Food is the main source of energy and of nutrition for animals,
+           and is usually of animal or plant origin. These are the substances that provide carbohydrates,
+           lipids, and proteins as an energy source to organisms.
+      </p>
+       <p>
+           It is anything which, when taken into the body,
+           serves to nourish or build up the tissues or to supply body heat. The type of food you dream of or perhaps
+           even eat will provide great insight into the type of emotional assistance required in waking life.
+       </p>
    </div>
 
 </body>

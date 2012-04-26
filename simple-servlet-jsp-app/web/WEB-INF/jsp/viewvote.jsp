@@ -14,22 +14,30 @@
     <c:forEach var="foodType" items="${FOODTYPELIST}">
 
         <div>
-            <li style="font-style:oblique;font-weight:bolder;font-size:18px">${foodType.foodTypeName}</li>
+            <li style="color:#6495ed; font-style:oblique;font-weight:bolder;font-size:15px">${foodType.foodTypeName}</li>
             <br/>
+
             <div style="margin-left:50px;">
-                <table style="font-size:15px;font-style:oblique;">
-                    <c:forEach var="food" items="${foodType.foodList}">
-                        <tr>
-                            <td style="width:120px">${food.foodName}</td>
-                            <c:if test="${foodVoteCount[food.foodId] != null}">
-                               <td style="width:60px">${foodVoteCount[food.foodId]} Votes</td>
-                            </c:if>
-                            <c:if test="${foodVoteCount[food.foodId] == null}">
-                               <td style="width:60px">0 Votes</td>
-                            </c:if>
-                        </tr>
-                    </c:forEach>
-                </table>
+                <div style="padding:10px;background-color:#e0ffff;line-height:200%">
+                    <table style="font-size:15px;font-style:oblique;">
+                        <c:forEach var="food" items="${foodType.foodList}">
+                            <tr>
+
+                                <td style="padding-bottom:10px; font-style:oblique;color:#4682b4;font-weight:bolder;width:120px">${food.foodName}</td>
+                                <c:if test="${foodVoteCount[food.foodId] != null}">
+                                    <td style="padding-bottom:10px;padding-left:50px;font-style:oblique;color:#4682b4;font-weight:bolder;width:80px">${foodVoteCount[food.foodId]}
+                                        Votes
+                                    </td>
+                                </c:if>
+                                <c:if test="${foodVoteCount[food.foodId] == null}">
+                                    <td style="padding-bottom:10px;padding-left:50px;font-style:oblique;color:#4682b4;font-weight:bolder;width:80px">0 Votes
+                                    </td>
+                                </c:if>
+
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </div>
             </div>
         </div>
         <br/>

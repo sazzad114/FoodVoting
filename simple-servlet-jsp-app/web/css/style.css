@@ -214,14 +214,11 @@ position: relative;
 }
 
 #content-box-in {
-width: 100%;
+ width: 100%;
+
 }
 
-.content-box-left {
-float: left;
-width: 625px;
-margin-bottom: 4em;
-}
+
 
 .content-box-right {
 float: right;
@@ -237,7 +234,8 @@ height: 20px;
 }
 
 .content-box-left-in {
-margin: 0.4em 1.7em 0 2em;
+   width:850px;
+   line-height:200%;
 }
 
 .gallery {
