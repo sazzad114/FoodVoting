@@ -54,8 +54,9 @@ public class VoteDaoImpl implements VoteDao{
 
     public Map<Integer,Integer> getFoodVoteCountMap() {
         Map<Integer, Integer> map;
-        String query = "SELECT FOOD_ID, COUNT(*) as VOTE_NUM FROM ASH_SAZ_USER_FOOD_VOTE GROUP BY FOOD_ID" ;
-        map = dbTemplate.queryForObjectMap(new ResultsetMapMapperImpl(),query);
+        String query = "SELECT FOOD_ID, COUNT(*) as VOTE_NUM FROM ASH_SAZ_USER_FOOD_VOTE GROUP BY VOTING_DATE,FOOD_ID HAVING VOTING_DATE = ?" ;
+        Date date = new Date();
+        map = dbTemplate.queryForObjectMap(new ResultsetMapMapperImpl(),query,date);
         return map;
     }
 }

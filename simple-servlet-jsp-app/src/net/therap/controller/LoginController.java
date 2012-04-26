@@ -43,6 +43,9 @@ public class LoginController extends HttpServlet {
             session.setAttribute("USER",user);
             FoodTypeService foodTypeService = new FoodTypeServiceImpl();
             List<FoodType> foodTypeList = foodTypeService.getFoodTypeList((User)request.getSession().getAttribute("USER"));
+
+            request.getSession().setAttribute("isLoggedIn",true);
+            log.debug(user.isAdmin()+"user type");
             request.getSession().setAttribute("FOODTYPELIST", foodTypeList);
             response.sendRedirect("/foodvoting/welcome");
 

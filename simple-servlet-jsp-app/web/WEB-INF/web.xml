@@ -108,6 +108,10 @@
         <filter-name>loginFilter</filter-name>
         <url-pattern>/vote</url-pattern>
     </filter-mapping>
+    <filter-mapping>
+        <filter-name>loginFilter</filter-name>
+        <url-pattern>/viewvote</url-pattern>
+    </filter-mapping>
 
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
