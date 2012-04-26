@@ -27,10 +27,10 @@ public class LoginRedirectFilter implements Filter {
         HttpSession session = ((HttpServletRequest)request).getSession(false);
 
         if (session != null && session.getAttribute("USER") != null) {
-            log.debug("user is not logged in");
+
             ((HttpServletResponse)response).sendRedirect("/foodvoting/welcome");
         } else {
-             log.debug("user is logged in");
+
              chain.doFilter(request, response);
         }
     }

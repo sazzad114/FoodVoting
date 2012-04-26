@@ -8,10 +8,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Your website name | Homepage</title>
+    <title>Food Voting</title>
+
     <!-- This template was created by Mantis-a [http://www.mantisa.cz/]. For more templates visit Free website templates [http://www.mantisatemplates.com/]. -->
 
     <meta name="Description" content="..."/>
@@ -74,7 +78,7 @@
                 <div class="content-box-left-in">
                   <div style="padding:50px;line-height:200%;">
                     <decorator:body/>
-                   <div>
+                   </div>
                 </div>
 
 

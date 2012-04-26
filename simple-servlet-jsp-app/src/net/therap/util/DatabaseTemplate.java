@@ -23,6 +23,8 @@ import java.util.Map;
  */
 public class DatabaseTemplate {
 
+    private static final Logger log = LoggerFactory.getLogger(DatabaseTemplate.class);
+
     private Connection connection;
     private static DatabaseTemplate databaseTemplate;
 
@@ -80,7 +82,7 @@ public class DatabaseTemplate {
             }
         }
     }
-     private static final Logger log = LoggerFactory.getLogger(DatabaseTemplate.class);
+
     public <E> List<E> queryForObject(RowObjectMapper<E> rowObjectMapper, String query, Object... parameters) {
 
         openConnection();

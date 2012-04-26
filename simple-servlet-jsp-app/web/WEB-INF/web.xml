@@ -6,8 +6,6 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" >
 
 
-
-                 <!-- Sitemesh Filter -->
     <servlet>
         <servlet-name>LoginController</servlet-name>
         <servlet-class>net.therap.controller.LoginController</servlet-class>
@@ -58,6 +56,12 @@
         <servlet-name>WelcomeController</servlet-name>
         <url-pattern>/welcome</url-pattern>
     </servlet-mapping>
+
+    <!--servlet-mapping>
+        <servlet-name>WelcomeController</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>-->
+
     <servlet-mapping>
         <servlet-name>LogoutController</servlet-name>
         <url-pattern>/logout</url-pattern>

@@ -55,7 +55,7 @@ public class LoginController extends HttpServlet {
 
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
 
-
+        log.debug("login get");
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/user/login.jsp");
         requestDispatcher.forward(request,response);
 

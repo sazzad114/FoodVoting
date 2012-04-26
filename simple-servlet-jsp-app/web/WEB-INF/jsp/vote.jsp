@@ -13,33 +13,35 @@
 <div>
     <c:forEach var="foodType" items="${FOODTYPELIST}">
 
-        <div>
+         <div style="padding:10px;border:1px solid #b0e0e6; margin-bottom:10px">
             <c:set var="isVoted" value="false"></c:set>
-            <li style="list-style-type:none">${foodType.foodTypeName}</li>
+            <li style="list-style-type:none;color:#6495ed; font-style:oblique;font-weight:bolder;font-size:15px"">${foodType.foodTypeName}</li>
             <c:if test="${foodType.votedFood ne null}">
-                </br><li style="color:red; list-style-type:none">You have already voted for this type of foods</li>
+                </br><li style="color:red; font-style:oblique;font-weight:bolder;font-size:15px; list-style-type:none">You have already voted for this type of foods</li>
                 <c:set var="isVoted" value="true"></c:set>
             </c:if>
             <br/>
 
             <div style="margin-left:50px">
-                <c:if test="${isVoted eq 'true'}">
-                    <c:forEach var="food" items="${foodType.foodList}">
-                        <li>${food.foodName}</li>
-                        <br/>
-                    </c:forEach>
-                </c:if>
-                <c:if test="${isVoted eq 'false'}">
-                    <form action="/foodvoting/vote" method="post">
 
+                    <c:if test="${isVoted eq 'true'}">
                         <c:forEach var="food" items="${foodType.foodList}">
-                            <input type="radio" id="${food.foodName}" name="${foodType.foodTypeName}"
-                                   value="${food.foodName}">
-                            <label for="${food.foodName}">${food.foodName}</label></br></br>
+                            <li style="color:#3864b4; font-style:oblique;font-weight:bolder;font-size:12px">${food.foodName}</li>
+                            <br/>
                         </c:forEach>
-                        </br><input type="submit" value="Vote">
-                    </form>
-                </c:if>
+                    </c:if>
+                    <c:if test="${isVoted eq 'false'}">
+                        <form action="/foodvoting/vote" method="post">
+
+                            <c:forEach var="food" items="${foodType.foodList}">
+                                <input type="radio" id="${food.foodName}" name="${foodType.foodTypeName}"
+                                       value="${food.foodName}">
+                                <label style="color:#3864b4; font-style:oblique;font-weight:bolder;font-size:12px" for="${food.foodName}">${food.foodName}</label></br></br>
+                            </c:forEach>
+                            <input type="submit" value="Vote">
+                        </form>
+                    </c:if>
+
             </div>
         </div>
     </c:forEach>

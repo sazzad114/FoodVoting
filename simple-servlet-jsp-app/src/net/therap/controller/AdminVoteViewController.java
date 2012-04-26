@@ -31,14 +31,24 @@ public class AdminVoteViewController extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+
+        if(((User)request.getSession().getAttribute("USER")).isAdmin() == false){
+            response.sendRedirect("/foodvoting/welcome");
+        }
+
+
         ViewVoteService viewVoteService = new ViewVoteServiceImpl();
-        Map<Integer,Integer> FoodIdVoteCountMap = viewVoteService.getFoodVoteCountMap();
-        request.setAttribute("foodVoteCount",FoodIdVoteCountMap);
+        Map<Integer,Integer> foodIdVoteCountMap = viewVoteService.getFoodVoteCountMap();
+
+
+        request.setAttribute("foodVoteCount",foodIdVoteCountMap);
+
         if(request.getSession().getAttribute("FOODTYPELIST") == null){
           FoodTypeService foodTypeService = new FoodTypeServiceImpl();
           List<FoodType> foodTypeList = foodTypeService.getFoodTypeList((User)request.getSession().getAttribute("USER"));
           request.getSession().setAttribute("FOODTYPELIST", foodTypeList);
         }
+
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/viewvote.jsp");
         requestDispatcher.forward(request,response);
 

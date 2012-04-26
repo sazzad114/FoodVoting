@@ -7,6 +7,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+
+<fmt:setLocale value="ind" />
+<fmt:setBundle basename="messages" />
+
 <html>
 <head><title>Simple jsp page</title></head>
 <body>
@@ -22,8 +27,8 @@
         </c:if>
     </div>
     <br/>
-    Name:<br/><input type="text" name="userName" size="30" /><br /><br/>
-    Password:<br/> <input type="password" name="password" size="30" /><br /><br/>
+    <fmt:message key="user.userName"/>:<br/><input type="text" name="userName" size="30" /><br /><br/>
+    <fmt:message key="user.password"/>:<br/> <input type="password" name="password" size="30" /><br /><br/>
     <input type="submit" value="login"/><br/></br>
    </fieldset>
  </form>

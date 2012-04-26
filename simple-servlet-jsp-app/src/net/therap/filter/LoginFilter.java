@@ -25,11 +25,13 @@ public class LoginFilter implements Filter {
             throws IOException, ServletException {
 
         HttpSession session = ((HttpServletRequest)request).getSession(false);
-        if (session == null || session.getAttribute("USER") == null) {
-            log.debug("user is not logged in");
+
+
+        if (session == null || session.getAttribute("USER") == null || session.getAttribute("isLoggedIn") == null) {
+            log.debug("log test");
             ((HttpServletResponse)response).sendRedirect("/foodvoting/login");
         } else {
-             log.debug("user is logged in");
+             log.debug("user is logged in but how");
              chain.doFilter(request, response);
         }
     }
