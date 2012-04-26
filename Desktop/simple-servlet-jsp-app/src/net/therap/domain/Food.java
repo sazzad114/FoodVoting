@@ -10,6 +10,19 @@ package net.therap.domain;
 public class Food {
 
     private int foodId;
+    private int foodTypeId;
+    private String foodName;
+    private String foodImageLink;
+
+    public int getFoodTypeId() {
+        return foodTypeId;
+    }
+
+    public void setFoodTypeId(int foodTypeId) {
+        this.foodTypeId = foodTypeId;
+    }
+
+
 
     public int getFoodId() {
         return foodId;
@@ -34,7 +47,12 @@ public class Food {
     public void setFoodImageLink(String foodImageLink) {
         this.foodImageLink = foodImageLink;
     }
+    @Override
+    public boolean equals(Object food){
+       if(food instanceof Food){
+         return this.foodName.equals(((Food)food).getFoodName());
+       }
+       return false;
+    }
 
-    private String foodName;
-    private String foodImageLink;
 }

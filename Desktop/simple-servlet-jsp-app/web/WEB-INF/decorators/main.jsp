@@ -23,7 +23,38 @@
 
 <body bgcolor="#F5FFFF">
 
-<decorator:body/>
+
+<div style="width:180;background-color:white;float:left;margin:20px">
+    <div style="width:auto;border-bottom:1px solid #87ceeb">
+         <a href="/foodvoting/welcome" style="text-decoration:none">
+             Home
+         </a>
+    </div>
+    <div style="width:auto;border-bottom:1px solid #87ceeb">
+         <a href="/foodvoting/foodlist" style="text-decoration:none">
+             Food List
+         </a>
+    </div>
+    <div style="width:auto;border-bottom:1px solid #87ceeb">
+         <a href="/foodvoting/vote" style="text-decoration:none">
+             Vote
+         </a>
+    </div>
+    <div style="width:auto;border-bottom:1px solid #87ceeb">
+         <a href="/foodvoting/viewvote" style="text-decoration:none">
+             Admin
+         </a>
+    </div>
+    <div style="width:auto;border-bottom:1px solid #87ceeb">
+         <a href="/foodvoting/logout" style="text-decoration:none">
+             Logout
+         </a>
+    </div>
+
+</div>
+<div style="margin-top:20px; margin-left:220px; width:auto; padding:20px; border:1px solid #87ceeb"  >
+     <decorator:body/>
+</div>
 
 <%@ include file="footer.jsp" %>
 

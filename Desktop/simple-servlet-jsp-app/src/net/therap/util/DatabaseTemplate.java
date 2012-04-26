@@ -1,8 +1,18 @@
 package net.therap.util;
 
+import net.therap.dao.VoteDaoImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -12,122 +22,57 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class DatabaseTemplate {
-    private String databaseUrl;
-    private String databaseUserName;
-    private String databaseUserPassword;
-    private String databaseDriver;
+
+    private Connection connection;
 
 
-
-
-
-
-    public DatabaseTemplate(String databaseUrl, String databaseUserName,String databaseUserPassword,String databaseDriver) {
-        this.databaseUrl =databaseUrl;
-        this.databaseUserName = databaseUserName;
-        this.databaseUserPassword = databaseUserPassword;
-        this.databaseDriver = databaseDriver;
-
-    }
-
-      public void setDatabaseDriver(String databaseDriver) {
-        this.databaseDriver = databaseDriver;
-    }
-
-    void setDatabaseUrl(String databaseUrl) {
-        this.databaseUrl = databaseUrl;
-    }
-
-    void setDatabaseUserName(String databaseUserName) {
-        this.databaseUserName = databaseUserName;
-    }
-
-    void setDatabaseUserPassword(String databaseUserPassword) {
-        this.databaseUserPassword = databaseUserPassword;
-    }
-
-    Connection openConnection() {
-        Connection connection;
+    public void openConnection() {
+        Context initContext = null;
         try {
-            Class.forName(databaseDriver);
-        } catch (ClassNotFoundException e) {
+            initContext = new InitialContext();
+            Context envContext = (Context) initContext.lookup("java:/comp/env");
+            DataSource ds = (DataSource) envContext.lookup("jdbc/myoracle");
+            connection = ds.getConnection();
+        } catch (NamingException e) {
             throw new RuntimeException(e);
-        }
-        try {
-            connection = DriverManager.getConnection(databaseUrl, databaseUserName, databaseUserPassword);
         } catch (SQLException e) {
-
             throw new RuntimeException(e);
         }
-        return connection;
     }
-
-
 
 
     public void execute(String query) {
-        Connection conToUse = openConnection();
+        openConnection();
         Statement stmt = null;
         try {
-            stmt = conToUse.createStatement();
+            stmt = connection.createStatement();
             stmt.executeQuery(query);
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
 
             try {
                 stmt.close();
-            }
-            catch (NullPointerException e) {
-                closeConnection(conToUse);
+                closeConnection();
+            } catch (NullPointerException e) {
+                closeConnection();
                 throw new RuntimeException(e);
-            }catch (SQLException e) {
-                closeConnection(conToUse);
+            } catch (SQLException e) {
+                closeConnection();
                 throw new RuntimeException(e);
             }
-
-
         }
     }
+     private static final Logger log = LoggerFactory.getLogger(DatabaseTemplate.class);
+    public <E> List<E> queryForObject(RowObjectMapper<E> rowObjectMapper, String query, Object... parameters) {
 
-    public <E> List<E> queryForObject(String query, RowObjectMapper<E> rowObjectMapper) {
-        Connection conToUse = openConnection();
-        Statement stmt = null;
-        ResultSet resultSet = null;
+        openConnection();
         List<E> listOfE = new ArrayList<E>();
-        try {
-            stmt = conToUse.createStatement();
-            resultSet = stmt.executeQuery(query);
-            while (resultSet.next()) {
-                listOfE.add(rowObjectMapper.mapRowToObject(resultSet));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-
-            try {
-                resultSet.close();
-                stmt.close();
-            }
-            catch (NullPointerException e) {
-                closeConnection(conToUse);
-                throw new RuntimeException(e);
-            }catch (SQLException e) {
-                closeConnection(conToUse);
-                throw new RuntimeException(e);
-            }
-
-
-
-        }
-        return listOfE;
-    }
-
-    public void executeInsertQuery(String query, Object... parameters) {
-        Connection conToUse = openConnection();
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            preparedStatement = conToUse.prepareStatement(query);
+            preparedStatement = connection.prepareStatement(query);
             int i = 1;
             for (Object parameter : parameters) {
                 if (parameter instanceof String) {
@@ -136,6 +81,108 @@ public class DatabaseTemplate {
                     preparedStatement.setInt(i, (Integer) parameter);
                 } else if (parameter instanceof Long) {
                     preparedStatement.setLong(i, (Long) parameter);
+                } else if (parameter instanceof java.util.Date) {
+                    log.debug("inside template before");
+                    preparedStatement.setDate(i, new java.sql.Date(((java.util.Date)parameter).getTime()));
+                    log.debug("##teafter");
+                }
+                i++;
+            }
+
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                listOfE.add(rowObjectMapper.mapRowToObject(resultSet));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+
+            try {
+                resultSet.close();
+                preparedStatement.close();
+                closeConnection();
+            } catch (NullPointerException e) {
+                closeConnection();
+                throw new RuntimeException(e);
+            } catch (SQLException e) {
+                closeConnection();
+                throw new RuntimeException(e);
+            }
+
+
+        }
+        return listOfE;
+    }
+
+    public <K,V> Map<K,V> queryForObjectMap(ResultSetMapMapper<K,V> resultSetMapMapper, String query, Object... parameters) {
+
+        openConnection();
+        Map<K,V> map = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            int i = 1;
+            for (Object parameter : parameters) {
+                if (parameter instanceof String) {
+                    preparedStatement.setString(i, (String) parameter);
+                } else if (parameter instanceof Integer) {
+                    preparedStatement.setInt(i, (Integer) parameter);
+                } else if (parameter instanceof Long) {
+                    preparedStatement.setLong(i, (Long) parameter);
+                } else if (parameter instanceof java.util.Date) {
+                    log.debug("inside template before");
+                    preparedStatement.setDate(i, new java.sql.Date(((java.util.Date)parameter).getTime()));
+                    log.debug("##teafter");
+                }
+                i++;
+            }
+
+            resultSet = preparedStatement.executeQuery();
+
+           map = resultSetMapMapper.getMapFromResultset(resultSet);
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+
+            try {
+                resultSet.close();
+                preparedStatement.close();
+                closeConnection();
+            } catch (NullPointerException e) {
+                closeConnection();
+                throw new RuntimeException(e);
+            } catch (SQLException e) {
+                closeConnection();
+                throw new RuntimeException(e);
+            }
+
+
+        }
+        return map;
+    }
+
+
+    public void executeInsertQuery(String query, Object... parameters) {
+        openConnection();
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            int i = 1;
+            for (Object parameter : parameters) {
+                if (parameter instanceof String) {
+                    preparedStatement.setString(i, (String) parameter);
+                } else if (parameter instanceof Integer) {
+                    preparedStatement.setInt(i, (Integer) parameter);
+                } else if (parameter instanceof Long) {
+                    preparedStatement.setLong(i, (Long) parameter);
+                }else if (parameter instanceof java.util.Date) {
+                    log.debug("inside template before");
+                    preparedStatement.setDate(i, new java.sql.Date(((java.util.Date)parameter).getTime()));
+                    log.debug("##teafter");
                 }
                 i++;
             }
@@ -148,19 +195,20 @@ public class DatabaseTemplate {
             try {
 
                 preparedStatement.close();
+                closeConnection();
             } catch (NullPointerException e) {
-                closeConnection(conToUse);
+                closeConnection();
                 throw new RuntimeException(e);
             } catch (SQLException e) {
-                closeConnection(conToUse);
+                closeConnection();
                 throw new RuntimeException(e);
             }
         }
     }
 
-    public void closeConnection(Connection conToClose) {
+    public void closeConnection() {
         try {
-            conToClose.close();
+            connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
