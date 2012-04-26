@@ -6,14 +6,21 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head><title>Simple jsp page</title></head>
 <body>
 
 <div style="margin:100px;width:350px;">
+
   <form action="/foodvoting/login" method="post">
-   <fieldset style="padding:20px">
+   <fieldset style="padding-left:20px">
     <legend>Log in:</legend>
+      <div>
+        <c:if test="${param.message ne null}" >
+           <span style="color:RED;">Incorrect user name or password</span>
+        </c:if>
+    </div>
     <br/>
     Name:<br/><input type="text" name="userName" size="30" /><br /><br/>
     Password:<br/> <input type="password" name="password" size="30" /><br /><br/>

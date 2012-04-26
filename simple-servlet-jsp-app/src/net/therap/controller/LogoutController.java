@@ -19,7 +19,7 @@ import java.io.IOException;
  */
 public class LogoutController extends HttpServlet {
 
-    private static final Logger log = LoggerFactory.getLogger(LogoutController.class);
+    //private static final Logger log = LoggerFactory.getLogger(LogoutController.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -28,12 +28,12 @@ public class LogoutController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         request.getSession().invalidate();
-        HttpSession httpSession = request.getSession(false);
+       /* HttpSession httpSession = request.getSession(false);
         if( httpSession == null){
 
             log.debug("Session is NULL");
 
-        }
+        } */
         response.sendRedirect("/foodvoting/login");
 
     }

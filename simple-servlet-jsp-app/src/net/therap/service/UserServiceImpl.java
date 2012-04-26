@@ -16,7 +16,16 @@ public class UserServiceImpl implements UserService{
     public User getUserByUserNameAndPassword(String userName, String password){
 
         UserDao userDao = new UserDaoImpl();
-        User user = userDao.getUserByUserNamePassword(userName,password);
-        return user;
+        User user = userDao.getUserByUserName(userName);
+
+        if(user != null && password.trim().equals(user.getPassword().trim()))
+        {
+             return user;
+        }
+        else
+        {
+            return null;
+        }
+
     }
 }

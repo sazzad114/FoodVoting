@@ -83,6 +83,17 @@
         <filter-name>ValidationFilter</filter-name>
         <filter-class>net.therap.filter.VoteValidationFilter</filter-class>
     </filter>
+
+      <filter>
+        <filter-name>loginRedirectFilter</filter-name>
+        <filter-class>net.therap.filter.LoginRedirectFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>loginRedirectFilter</filter-name>
+        <url-pattern>/login</url-pattern>
+    </filter-mapping>
+
     <filter-mapping>
         <filter-name>ValidationFilter</filter-name>
         <url-pattern>/vote</url-pattern>

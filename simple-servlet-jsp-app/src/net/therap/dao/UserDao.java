@@ -6,6 +6,6 @@ import net.therap.domain.User;
 public interface UserDao {
 
 
-    User getUserByUserNamePassword(String userName , String password);
+    User getUserByUserName(String userName);
     User getUserById(int userId);
 }

@@ -19,7 +19,7 @@ public class FoodDaoImpl implements FoodDao{
 
    DatabaseTemplate dbTemplate;
    public FoodDaoImpl(){
-        dbTemplate = new DatabaseTemplate();
+        dbTemplate = DatabaseTemplate.getDatabaseTemplate();
     }
 
     public List<Food> getFoodList() {

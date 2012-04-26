@@ -22,7 +22,7 @@ public class FoodTypeDaoImpl implements FoodTypeDao{
 
     public FoodTypeDaoImpl(){
 
-        dbTemplate = new DatabaseTemplate();
+        dbTemplate = DatabaseTemplate.getDatabaseTemplate();
     }
 
     public List<FoodType> getFoodTypeList(User user) {

@@ -32,8 +32,8 @@ public class AdminVoteViewController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         ViewVoteService viewVoteService = new ViewVoteServiceImpl();
-        Map<Integer,Integer> listOfVote = viewVoteService.getFoodVoteCountMap();
-        request.setAttribute("foodVoteCount",listOfVote);
+        Map<Integer,Integer> FoodIdVoteCountMap = viewVoteService.getFoodVoteCountMap();
+        request.setAttribute("foodVoteCount",FoodIdVoteCountMap);
         if(request.getSession().getAttribute("FOODTYPELIST") == null){
           FoodTypeService foodTypeService = new FoodTypeServiceImpl();
           List<FoodType> foodTypeList = foodTypeService.getFoodTypeList((User)request.getSession().getAttribute("USER"));

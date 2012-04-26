@@ -24,6 +24,22 @@ import java.util.Map;
 public class DatabaseTemplate {
 
     private Connection connection;
+    private static DatabaseTemplate databaseTemplate;
+
+    private DatabaseTemplate()
+    {
+
+    }
+
+    public static DatabaseTemplate getDatabaseTemplate()
+    {
+        if(databaseTemplate == null)
+        {
+            databaseTemplate = new DatabaseTemplate();
+        }
+        return databaseTemplate;
+    }
+
 
 
     public void openConnection() {

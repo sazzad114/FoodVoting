@@ -33,8 +33,8 @@ public class LoginController extends HttpServlet {
         User user = userService.getUserByUserNameAndPassword(userName,password);
 
         if(user == null){
-
-            response.sendRedirect("/foodvoting/login");
+            String unsuccessfulLogin = "loginerror";
+            response.sendRedirect("/foodvoting/login?message="+unsuccessfulLogin);
 
         }
         else {

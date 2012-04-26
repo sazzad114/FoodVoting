@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class VoteController extends HttpServlet {
 
-    private static final Logger log = LoggerFactory.getLogger(VoteController.class);
+   // private static final Logger log = LoggerFactory.getLogger(VoteController.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -40,7 +40,8 @@ public class VoteController extends HttpServlet {
         FoodType foodType = new FoodType();
         Food food = new Food();
         Vote vote = new Vote();
-        String foodTypeName = null;
+        String foodTypeName;
+        foodTypeName = null;
         Enumeration enumerator = request.getParameterNames();
 
         while (enumerator.hasMoreElements()) {

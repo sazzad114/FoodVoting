@@ -21,14 +21,14 @@ public class UserDaoImpl implements UserDao {
 
     public UserDaoImpl(){
 
-        dbTemplate = new DatabaseTemplate();
+        dbTemplate = DatabaseTemplate.getDatabaseTemplate();
 
     }
-    public User getUserByUserNamePassword(String userName , String password){
+    public User getUserByUserName(String userName){
 
-        String query = "select * from ASH_SAZ_USER,ASH_SAZ_USER_TYPE where USER_NAME = ? AND USER_PSD = ? AND ASH_SAZ_USER.USER_TYPE_ID = ASH_SAZ_USER_TYPE.USER_TYPE_ID";
+        String query = "select * from ASH_SAZ_USER,ASH_SAZ_USER_TYPE where USER_NAME = ? AND ASH_SAZ_USER.USER_TYPE_ID = ASH_SAZ_USER_TYPE.USER_TYPE_ID";
 
-        List<User> userList = dbTemplate.queryForObject(new RowUserMapperImpl(),query,userName.trim(),password.trim());
+        List<User> userList = dbTemplate.queryForObject(new RowUserMapperImpl(),query,userName.trim());
 
         if(userList.size() == 0){
             return null;

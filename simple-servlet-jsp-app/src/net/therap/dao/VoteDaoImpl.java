@@ -18,29 +18,27 @@ import java.util.Map;
  * Time: 9:54 AM
  * To change this template use File | Settings | File Templates.
  */
-public class VoteDaoImpl implements VoteDao{
+public class VoteDaoImpl implements VoteDao {
 
     private static final Logger log = LoggerFactory.getLogger(VoteDaoImpl.class);
     DatabaseTemplate dbTemplate;
 
-    public VoteDaoImpl(){
+    public VoteDaoImpl() {
 
-        dbTemplate = new DatabaseTemplate();
+        dbTemplate = DatabaseTemplate.getDatabaseTemplate();
     }
 
     public Vote getVoteByUserFoodType(User user, int foodTypeId) {
 
 
         String query = "SELECT * FROM ASH_SAZ_USER_FOOD_VOTE WHERE FOOD_TYPE_ID = ? AND USER_ID = ? AND VOTING_DATE = ?";
-        log.debug(" "+foodTypeId+" "+ user.getId()+"before date" + new Date());
+        log.debug(" " + foodTypeId + " " + user.getId() + "before date" + new Date());
         Date date = new Date();
-        List<Vote> voteList = dbTemplate.queryForObject(new RowVoteMapperImpl(),query,foodTypeId,user.getId(),date);
-        log.debug(" "+foodTypeId+" "+ user.getId()+"after date access");
-        if(voteList.size() == 0){
-            //log.debug("return null for" + foodTypeId);
+        List<Vote> voteList = dbTemplate.queryForObject(new RowVoteMapperImpl(), query, foodTypeId, user.getId(), date);
+        log.debug(" " + foodTypeId + " " + user.getId() + "after date access");
+        if (voteList.size() == 0) {
             return null;
-        }
-        else {
+        } else {
             return voteList.get(0);
         }
     }
@@ -48,15 +46,15 @@ public class VoteDaoImpl implements VoteDao{
     public void saveVote(Vote vote, User user) {
 
         String query = "INSERT INTO ASH_SAZ_USER_FOOD_VOTE VALUES(SEQ_ASH_SAZ_USER_FOOD_VOTE.nextval,?,?,?,?)";
-        dbTemplate.executeInsertQuery(query,new Date(),user.getId(),vote.getFood().getFoodId(),vote.getFood().getFoodTypeId());
+        dbTemplate.executeInsertQuery(query, new Date(), user.getId(), vote.getFood().getFoodId(), vote.getFood().getFoodTypeId());
 
     }
 
-    public Map<Integer,Integer> getFoodVoteCountMap() {
+    public Map<Integer, Integer> getFoodVoteCountMap() {
         Map<Integer, Integer> map;
-        String query = "SELECT FOOD_ID, COUNT(*) as VOTE_NUM FROM ASH_SAZ_USER_FOOD_VOTE GROUP BY VOTING_DATE,FOOD_ID HAVING VOTING_DATE = ?" ;
+        String query = "SELECT FOOD_ID, COUNT(*) as VOTE_NUM FROM ASH_SAZ_USER_FOOD_VOTE GROUP BY VOTING_DATE,FOOD_ID HAVING VOTING_DATE = ?";
         Date date = new Date();
-        map = dbTemplate.queryForObjectMap(new ResultsetMapMapperImpl(),query,date);
+        map = dbTemplate.queryForObjectMap(new ResultsetMapMapperImpl(), query, date);
         return map;
     }
 }
